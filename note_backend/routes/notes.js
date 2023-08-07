@@ -27,10 +27,10 @@ notes.get("/:id", async (req, res) => {
 
     const query = {
 
-        _id : new ObjectId(req.params.id)
+        _id: new ObjectId(req.params.id)
 
     }
-    
+
     //get collection
     const collection = await client.db("notes_app").collection("notes");
 
@@ -56,20 +56,20 @@ notes.post("/", async (req, res) => {
 })
 
 //---------------------USER PUT------------------//
-notes.put("/:id",async (req , res) => {
+notes.put("/:id", async (req, res) => {
     const body_data = req.body;
 
     const query = {
-        _id : new ObjectId(req.params.id)
+        _id: new ObjectId(req.params.id)
     }
 
     const update = {
-        $set : body_data
+        $set: body_data
     }
 
     const collection = await client.db("notes_app").collection("notes");
 
-    const data = await collection.updateOne(query,update)
+    const data = await collection.updateOne(query, update)
 
     res.send(`${req.params.id} is updated`)
 })
