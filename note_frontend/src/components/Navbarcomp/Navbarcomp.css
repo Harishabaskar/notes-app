@@ -1,0 +1,31 @@
+
+:root {
+    --primary : #FF78C4;
+    --secondary1 : #E1AEFF;
+    --secondary2 : #FFBDF7;
+    --neutral : #FFECEC;
+  }
+  
+.Navbar{
+    background-color: #cc1c80;
+    height: 8vh;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 15px;
+    position: sticky;
+    top : 0;
+}
+
+.links a{
+    text-decoration: none;
+    color : white;
+    margin: auto 10px;
+}
+
+.navbartitle{
+    font-weight: 600;
+    font-size: large;
+    
+}
