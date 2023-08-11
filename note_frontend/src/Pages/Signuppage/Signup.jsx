@@ -9,7 +9,7 @@ function Signup() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
-    const addUser = () => {
+    const addUser = async () => {
         const data = {
             userName: userName,
             firstName: firstName,
@@ -29,12 +29,31 @@ function Signup() {
             redirect: 'follow'
         };
 
-        fetch("/api/v1/users", requestOptions)
-            .then(response => response.text())
-            .then(result => console.log(result))
-            .catch(error => console.log('error', error));
+        const response = await fetch("/api/v1/users", {
+            method: "GET",
+            headers: myHeaders,
+            redirect: 'follow'
+        })
+
+        const result = await response.json()
+        
+        //filtering the data
+
+        const filterData = result.filter((item) => {
+            return item.email === email
+        })
+
+
+        // post request based on the filter data
+        if (filterData.length > 0) {
+            alert("email already exist")
+        } else {
+            const response = await fetch("/api/v1/users", requestOptions);
+            const result = await response.text();
+            console.log(result)
             alert("you are successfully signed in")
-            window.location.href= "/login";
+            window.location.href = "/login";
+        }
     }
 
 
