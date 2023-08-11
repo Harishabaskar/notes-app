@@ -19,7 +19,7 @@ users.get("/", async (req, res) => {
     const data = await collection.find({}).toArray();
 
     //response
-    res.send(data);
+    res.json(data);
 })
 
 //---------------------USER GETBYID------------------//
@@ -37,7 +37,7 @@ users.get("/:id", async (req, res) => {
     //find all the methods
     const data = await collection.findOne(query);
     //response
-    res.send(data);
+    res.json(data);
 })
 
 
