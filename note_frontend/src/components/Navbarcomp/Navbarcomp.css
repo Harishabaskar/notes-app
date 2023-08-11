@@ -29,3 +29,12 @@
     font-size: large;
     
 }
+.links button{
+    text-decoration: none;
+    color : white;
+    margin: auto 5px;
+    background: none;
+    outline: none;
+    border: none;
+    font-size: 16px;
+}
