@@ -1,0 +1,45 @@
+.notespage {
+    height: 92vh;
+    position: relative;
+    
+}
+.addbutton button{
+    height:50px;
+    width: 50px;
+    color: white;
+    background-color: #CC1C80;
+    border: none;
+    border-radius: 50%;
+
+}
+.addbutton{
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    
+}
+.form{
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    background-color: #ffd8ee;
+    padding: 25px;
+    border : 2px solid #fd89ca;
+    color: #cc1c80;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    
+}
+.form textarea{
+    resize: none;
+    outline: none;
+    padding: 5px;
+    border : 1.5px solid #fd89ca;
+}
+.form input{
+    outline: none;
+    padding: 5px;
+    margin: 10px 0;
+    border : 1.5px solid #fd89ca;
+}

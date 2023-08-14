@@ -1,6 +1,7 @@
 import './App.css';
 import Homepage from './Pages/Homepage/Homepage';
 import Login from './Pages/Loginpage/Loginpage';
+import Notespage from './Pages/Notespage/Notespage';
 import Signup from './Pages/Signuppage/Signup';
 import Navbarcomp from './components/Navbarcomp/Navbarcomp';
 import {BrowserRouter,Routes,Route} from 'react-router-dom'
@@ -13,7 +14,7 @@ function App() {
       <Navbarcomp/>
       <Routes>
         <Route path='/' element={<Homepage/>}/>
-        <Route path='/notes' element={"notes page"}/>
+        <Route path='/notes' element={<Notespage/>}/>
         <Route path='/login' element={<Login/>}/>
         <Route path='/signup' element={<Signup/>}/>
 
