@@ -1,14 +1,14 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;1,100;1,200&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
-
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 :root {
-  --primary : #FF78C4;
-  --secondary1 : #E1AEFF;
-  --secondary2 : #FFBDF7;
-  --neutral : #FFECEC;
+	--primary: #ff78c4;
+	--secondary1: #e1aeff;
+	--secondary2: #ffbdf7;
+	--neutral: #ffecec;
 }
 
 .App {
 	font-family: "Roboto", sans-serif;
-  
 }
-
+button{
+	font-family: 'Roboto', sans-serif;
+}
