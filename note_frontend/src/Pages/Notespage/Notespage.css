@@ -85,6 +85,12 @@
 .note_card_body {
 	font-size: smaller;
 }
+.note_card_body p{
+	display: -webkit-box;
+	-webkit-line-clamp: 7;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
 .note_card_button {
 	position: absolute;
 	bottom: 15px;

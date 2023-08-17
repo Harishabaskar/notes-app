@@ -1,84 +1,172 @@
 import "./Notespage.css";
-import {useState} from "react";
+import { useEffect, useState } from "react";
 
 function Notespage() {
+	const [data, setData] = useState([]);
 
-	const [selectedNote , setSelectedNote] = useState(0)
+	const [refresher, SetRefresher] = useState(false);
 
+	useEffect(() => {
+		var myHeaders = new Headers();
+		myHeaders.append("Content-Type", "application/json");
 
-	const data = [
-		{
-			id: 0,
-			title: "Animal",
-			content:
-				"Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quibusdam officiis vitae error doloremque. Necessitatibus provident doloremque veritatis nostrum magni ipsa a incidunt enim dolorem. Similique deserunt quo minima dolorem iure?",
-		},
-		{
-			id: 1,
-			title: "Birds",
-			content:
-				"Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quibusdam officiis vitae error doloremque. Necessitatibus provident doloremque veritatis nostrum magni ipsa a incidunt enim dolorem. Similique deserunt quo minima dolorem iure?",
-		},
-		{
-			id: 2,
-			title: "Insects",
-			content:
-				"Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quibusdam officiis vitae error doloremque. Necessitatibus provident doloremque veritatis nostrum magni ipsa a incidunt enim dolorem. Similique deserunt quo minima dolorem iure?",
-		},
-		{
-			id: 3,
-			title: "Humans",
-			content:
-				"Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quibusdam officiis vitae error doloremque. Necessitatibus provident doloremque veritatis nostrum magni ipsa a incidunt enim dolorem. Similique deserunt quo minima dolorem iure?",
-		},
-		{
-			id: 4,
-			title: "Humans",
-			content:
-				"Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quibusdam officiis vitae error doloremque. Necessitatibus provident doloremque veritatis nostrum magni ipsa a incidunt enim dolorem. Similique deserunt quo minima dolorem iure?",
-		},
-		{
-			id: 5,
-			title: "Humans",
-			content:
-				"Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quibusdam officiis vitae error doloremque. Necessitatibus provident doloremque veritatis nostrum magni ipsa a incidunt enim dolorem. Similique deserunt quo minima dolorem iure?",
-		},
-	];
+		var requestOptions = {
+			method: "GET",
+			headers: myHeaders,
+
+			redirect: "follow",
+		};
+
+		fetch("/api/v1/notes", requestOptions)
+			.then((response) => response.text())
+			.then((result) => setData(JSON.parse(result)))
+			.catch((error) => console.log("error", error));
+	}, [refresher]);
+
+	const [addNote, setAddnote] = useState({
+		title: "",
+		content: "",
+	});
+
+	const [changedNote, setChangedNote] = useState({
+		id: "",
+		title: "",
+		content: "",
+	});
+
 	//>>>>>>>>>>>>>>    toggle form switch    <<<<<<<<<<<<<<<<<<<//
 	const toggleForm = () => {
+		setAddnote({
+			title: "",
+			content: "",
+		});
+
 		const form = document.querySelector(".overlay");
 		form.classList.toggle("hidden");
 	};
 	/*>>>>>>>>>>>>>>>>>>>   selected note  >>>>>>>>>>>>>>>>>>>   */
 
 	const showEdit = (index) => {
-		setSelectedNote(index) 
-		toggleEdit()
-	}
+		setChangedNote((prev) => ({
+			...prev,
+			id: data[index]._id,
+			title: data[index].title,
+			content: data[index].content,
+		}));
+
+		toggleEdit();
+	};
 	const toggleEdit = () => {
 		const editForm = document.querySelector(".editOverlay");
 		editForm.classList.toggle("hidden");
-	}
+	};
 	const saveEdit = () => {
-		console.log("successfully saved")
-	}
-	const deleteNote = () => {
-		console.log("successfully deleted")
-	}
+		var myHeaders = new Headers();
+		myHeaders.append("Content-Type", "application/json");
+
+		var raw = JSON.stringify({
+			title: changedNote.title,
+			content: changedNote.content,
+			
+		});
+
+		var requestOptions = {
+			method: "PUT",
+			headers: myHeaders,
+			body: raw,
+			redirect: "follow",
+		};
+
+		fetch("/api/v1/notes/"+changedNote.id, requestOptions)
+			.then((response) => response.text())
+			.then((result) => console.log(result))
+			.catch((error) => console.log("error", error));
+
+			SetRefresher(!refresher);
+
+		toggleEdit()
+
+		console.log("successfully saved");
+		console.log("note is changed", changedNote);
+	};
+	const deleteNote = (id) => {
+		var myHeaders = new Headers();
+		myHeaders.append("Content-Type", "application/json");
+
+		var requestOptions = {
+			method: "DELETE",
+			headers: myHeaders,
+			redirect: "follow",
+		};
+
+		fetch("/api/v1/notes/" + id, requestOptions)
+			.then((response) => response.text())
+			.then((result) => console.log(result))
+			.catch((error) => console.log("error", error));
+
+		SetRefresher(!refresher);
+
+		console.log("successfully deleted");
+	};
 	const AddNote = () => {
-		console.log("successfully added")
-	}
+		const userData = sessionStorage.getItem("user");
 
+		const jsonData = JSON.parse(userData);
 
+		var myHeaders = new Headers();
+		myHeaders.append("Content-Type", "application/json");
+
+		var raw = JSON.stringify({
+			title: addNote.title,
+			content: addNote.content,
+			userId: jsonData[0]._id,
+		});
+
+		var requestOptions = {
+			method: "POST",
+			headers: myHeaders,
+			body: raw,
+			redirect: "follow",
+		};
+
+		fetch("/api/v1/notes", requestOptions)
+			.then((response) => response.text())
+			.then((result) => console.log(result))
+			.catch((error) => console.log("error", error));
+
+		console.log("note is added", addNote);
+
+		console.log(jsonData[0]._id);
+
+		console.log("successfully added");
+
+		SetRefresher(!refresher);
+
+		toggleForm();
+	};
+	const handleChange = (e) => {
+		const { name, value } = e.target;
+		setChangedNote((prev) => ({
+			...prev,
+			[name]: value,
+		}));
+	};
+	const handleChangeAdd = (e) => {
+		const { name, value } = e.target;
+		setAddnote((prev) => ({
+			...prev,
+			[name]: value,
+		}));
+	};
 
 	return (
 		<div className="notespage">
 			{/*>>>>>>>>>>>>>>>>>>>   to display notes   >>>>>>>>>>>>>>>>>>>   */}
 			<div className="note_body">
 				<div className="note_cards">
-					{data.map((item,index) => {
+					{data.map((item, index) => {
 						return (
-							<div className="note_card" key={item.id}>
+							<div className="note_card" key={item._id}>
 								<div className="note_card_title">
 									<span>
 										<b>{item.title}</b>
@@ -86,11 +174,23 @@ function Notespage() {
 								</div>
 								<hr />
 								<div className="note_card_body">
-									{item.content}
+									<p>{item.content}</p>
 								</div>
 								<div className="note_card_button ">
-									<button onClick={() => {showEdit(index)}}>Edit</button>
-									<button onClick={deleteNote}>Delete</button>
+									<button
+										onClick={() => {
+											showEdit(index);
+										}}
+									>
+										Edit
+									</button>
+									<button
+										onClick={() => {
+											deleteNote(item._id);
+										}}
+									>
+										Delete
+									</button>
 								</div>
 							</div>
 						);
@@ -109,19 +209,21 @@ function Notespage() {
 					<label htmlFor="">Edit Note</label>
 					<input
 						type="text"
-						name="edittitle"
+						name="title"
 						id="edittitle"
 						placeholder="Title"
-						defaultValue={data[selectedNote].title}
+						value={changedNote.title}
+						onChange={handleChange}
 					/>
 
 					<textarea
-						name="editcontent"
+						name="content"
 						id="editcontent"
 						cols="30"
 						rows="10"
 						placeholder="Type a note"
-						defaultValue={data[selectedNote].content}
+						value={changedNote.content}
+						onChange={handleChange}
 					></textarea>
 					<div className="form_btn">
 						<button onClick={saveEdit}>Save</button>
@@ -132,13 +234,15 @@ function Notespage() {
 			{/*>>>>>>>>>>>>>>>>>>>   to add notes   >>>>>>>>>>>>>>>>>>>   */}
 
 			<div className="overlay hidden">
-				<div className="form" >
+				<div className="form">
 					<label htmlFor="">Add Note</label>
 					<input
 						type="text"
 						name="title"
 						id="title"
 						placeholder="Title"
+						onChange={handleChangeAdd}
+						value={addNote.title}
 					/>
 
 					<textarea
@@ -147,6 +251,8 @@ function Notespage() {
 						cols="30"
 						rows="10"
 						placeholder="Type a note"
+						onChange={handleChangeAdd}
+						value={addNote.content}
 					></textarea>
 					<div className="form_btn">
 						<button onClick={AddNote}>Add</button>
@@ -155,7 +261,6 @@ function Notespage() {
 				</div>
 			</div>
 		</div>
-
 	);
 }
 
