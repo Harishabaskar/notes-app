@@ -3,7 +3,7 @@ import "./Navbarcomp.css";
 import { useState } from "react";
 
 function Navbarcomp(){
-    const[logged , setLogged] = useState(sessionStorage.getItem("loggedIn") ? true : false) 
+    const[logged] = useState(sessionStorage.getItem("loggedIn") ? true : false) 
 
     const loginHandler = () => {
         if(logged){

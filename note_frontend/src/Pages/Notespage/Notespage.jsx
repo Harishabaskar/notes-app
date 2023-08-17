@@ -7,17 +7,23 @@ function Notespage() {
 	const [refresher, SetRefresher] = useState(false);
 
 	useEffect(() => {
+
+		const userData = sessionStorage.getItem("user");
+
+		const jsonData = JSON.parse(userData);
+
+		const user_id = jsonData[0]._id || "no_user"
+
 		var myHeaders = new Headers();
 		myHeaders.append("Content-Type", "application/json");
 
 		var requestOptions = {
 			method: "GET",
 			headers: myHeaders,
-
 			redirect: "follow",
 		};
 
-		fetch("/api/v1/notes", requestOptions)
+		fetch("/api/v1/notes/note_userId/"+user_id, requestOptions)
 			.then((response) => response.text())
 			.then((result) => setData(JSON.parse(result)))
 			.catch((error) => console.log("error", error));

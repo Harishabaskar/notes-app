@@ -11,13 +11,15 @@ connect();
 
 
 //---------------------USER GETALL------------------//
-notes.get("/", async (req, res) => {
+notes.get("/note_userId/:userId", async (req, res) => {
 
     //get collection
     const collection = await client.db("notes_app").collection("notes");
 
     //find all the methods
-    const data = await collection.find({}).toArray();
+    const data = await collection.find({
+        "userId": req.params.userId 
+    }).toArray();
 
     //response
     res.send(data);
