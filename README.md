@@ -13,13 +13,13 @@ This project was bootstrapped with [Next.js](https://nextjs.org/).
 1. Clone the repo
 
    ```sh
-   git clone https://github.com/Deva0813/keep_notes_nextjs.git
+   git clone https://github.com/Harishabaskar/notes-app.git
     ```
 2. Install NPM packages
 
     ```sh
     # open the project folder
-    cd keep_notes_nextjs
+    cd notes-app
 
     # install dependencies
     npm install
