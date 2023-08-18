@@ -1,13 +1,12 @@
 # notes-app
 ## Getting started
-This project was bootstrapped with [Next.js](https://nextjs.org/).
+This project was built with [React.js](https://reactjs.org/).
 
 ### Project Requirements :
 - [Node.js](https://nodejs.org/en/)
 - [MongoDB](https://www.mongodb.com/)
-- [Next.js](https://nextjs.org/)
 - [React.js](https://reactjs.org/)
-- [Tailwind CSS](https://tailwindcss.com/)
+- [Express.js](https://expressjs.com/)
 
 ### Installation :
 1. Clone the repo
